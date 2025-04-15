@@ -66,12 +66,7 @@ class CustomAppBar extends StatelessWidget {
           padding: const EdgeInsets.only(left: 12.0),
           child:
               pfpPath != null
-                  ? SvgPicture.asset(
-                    pfpPath!,
-                    fit: BoxFit.contain,
-                    height: 32,
-                    color: Colors.white,
-                  )
+                  ? SvgPicture.asset(pfpPath!, fit: BoxFit.contain, height: 32)
                   : const SizedBox(),
         ),
       ),

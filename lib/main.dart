@@ -1,4 +1,4 @@
-import 'package:cat_to_do_list/features/auth/home/presentation/home_screen.dart';
+import 'package:cat_to_do_list/features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
