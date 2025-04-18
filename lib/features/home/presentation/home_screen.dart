@@ -165,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   }
-                  return const SizedBox.shrink(); // Default empty state
+                  return const SizedBox();
                 },
               ),
             ),
@@ -173,9 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(
-          bottom: 65,
-        ), // Adjust padding if needed based on BottomNavBar height
+        padding: const EdgeInsets.only(bottom: 65),
         child: CreateNewTaskButton(
           onPressed: () {
             // Use the AppRouter helper method for navigation
@@ -208,7 +206,6 @@ class _HomeScreenState extends State<HomeScreen> {
         .map(
           (task) => ListTile(
             leading: Checkbox(
-              // Add checkbox to mark complete/incomplete
               value: task.isCompleted,
               onChanged: (bool? value) {
                 if (value != null) {
@@ -216,11 +213,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   context.read<TaskCubit>().updateTask(updatedTask);
                 }
               },
-              checkColor: Colors.black, // Color of the check mark
-              activeColor: Colors.deepPurpleAccent, // Color when checked
-              side: const BorderSide(
-                color: Colors.white54,
-              ), // Border color when unchecked
+              checkColor: Colors.white,
+              activeColor: Colors.deepPurpleAccent,
+              side: const BorderSide(color: Colors.white54),
             ),
             title: Text(
               task.title,
@@ -252,25 +247,19 @@ class _HomeScreenState extends State<HomeScreen> {
             trailing:
                 isCompletedList
                     ? IconButton(
-                      // Add delete button for completed tasks
                       icon: const Icon(
                         Icons.delete_outline,
                         color: Colors.redAccent,
                       ),
                       onPressed: () {
-                        // Optional: Add confirmation dialog here
                         context.read<TaskCubit>().deleteTask(task.id);
                       },
                     )
-                    : const Icon(
-                      Icons.chevron_right,
-                      color: Colors.white54,
-                    ), // Indicate tappable
+                    : const Icon(Icons.chevron_right, color: Colors.white54),
             onTap: () {
-              // Use AppRouter helper method to navigate to edit screen
               AppRouter.goToEditTask(context, task.id);
             },
-            dense: true, // Make list items more compact
+            dense: true,
           ),
         )
         .toList();
