@@ -76,25 +76,45 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 40),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: CustomButton(
-                        text: state is AuthLoading ? 'LOADING...' : 'LOGIN',
-                        textColor: Colors.white,
-                        backgroundColor: Colors.transparent,
-                        onPressed: () {
-                          if (_email.isEmpty || _password.isEmpty) {
-                            UserAlertDialog.show(
-                              context: context,
-                              title: 'Error',
-                              content: 'Email and password are required.',
-                              buttonText: 'OK',
-                              onPressed: () => GoRouter.of(context).pop(),
-                            );
-                          }
-                          context.read<AuthCubit>().login(_email, _password);
-                        },
-                      ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: CustomButton(
+                            text: state is AuthLoading ? 'LOADING...' : 'LOGIN',
+                            textColor: Colors.white,
+                            backgroundColor: Colors.transparent,
+                            onPressed: () {
+                              if (_email.isEmpty || _password.isEmpty) {
+                                UserAlertDialog.show(
+                                  context: context,
+                                  title: 'Error',
+                                  content: 'Email and password are required.',
+                                  buttonText: 'OK',
+                                  onPressed: () => GoRouter.of(context).pop(),
+                                );
+                                return;
+                              }
+                              context.read<AuthCubit>().login(
+                                _email,
+                                _password,
+                              );
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        SizedBox(
+                          width: double.infinity,
+                          child: CustomButton(
+                            text: 'SIGN IN WITH GOOGLE',
+                            textColor: Colors.white,
+                            backgroundColor: Colors.blue,
+                            onPressed: () {
+                              context.read<AuthCubit>().signInWithGoogle();
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Padding(
