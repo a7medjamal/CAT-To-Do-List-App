@@ -4,12 +4,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomAppBar extends StatelessWidget {
   String? iconPath;
-  final String? pfpPath, pName;
+  String? pfpPath, pName, taskName;
+  bool taskScreen = false;
   CustomAppBar({
     super.key,
     this.iconPath,
-    required this.pfpPath,
-    required this.pName,
+    this.pfpPath,
+    this.pName,
+    this.taskName,
+    this.taskScreen = false,
   });
   @override
   Widget build(BuildContext context) {
@@ -25,23 +28,34 @@ class CustomAppBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Hello ${pName ?? 'User'},',
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: Colors.white,
-              ),
-            ),
+            taskScreen
+                ? Text(
+                  taskName!,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                  ),
+                )
+                : Text(
+                  'Hello ${pName ?? 'User'},',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
+                  ),
+                ),
             const SizedBox(height: 5),
-            Text(
-              'Keep Plan For 1 Day',
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
+            !taskScreen
+                ? Text(
+                  'Keep Plan For 1 Day',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                )
+                : const SizedBox(height: 0),
           ],
         ),
         elevation: 0,
@@ -60,15 +74,26 @@ class CustomAppBar extends StatelessWidget {
               ),
             )
           else
-            const SizedBox(),
+            const SizedBox(width: 1),
         ],
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 12.0),
-          child:
-              pfpPath != null
-                  ? SvgPicture.asset(pfpPath!, fit: BoxFit.contain, height: 32)
-                  : const SizedBox(),
-        ),
+        leading:
+            pfpPath != null
+                ? Padding(
+                  padding: const EdgeInsets.only(left: 12.0),
+                  child: SvgPicture.asset(
+                    pfpPath!,
+                    fit: BoxFit.contain,
+                    height: 32,
+                  ),
+                )
+                : Padding(
+                  padding: const EdgeInsets.only(left: 12.0),
+                  child: SvgPicture.asset(
+                    'assets/icons/profile_icon.svg',
+                    fit: BoxFit.contain,
+                    height: 32,
+                  ),
+                ),
       ),
     );
   }

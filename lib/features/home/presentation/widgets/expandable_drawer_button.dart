@@ -8,7 +8,7 @@ class ExpandableDrawerButton extends StatefulWidget {
   const ExpandableDrawerButton({
     super.key,
     required this.label,
-    required this.children,
+    required this.children, required bool initiallyExpanded,
   });
 
   @override

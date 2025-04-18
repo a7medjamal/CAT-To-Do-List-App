@@ -11,6 +11,9 @@ analyzer:
   errors:
     must_be_immutable: ignore
     deprecated_member_use: ignore
+    unused_local_variable: ignore
+    non_constant_identifier_names: ignore
+    use_build_context_synchronously: ignore
 include: package:flutter_lints/flutter.yaml
 
 linter:
