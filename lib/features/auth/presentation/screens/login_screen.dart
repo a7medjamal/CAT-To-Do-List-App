@@ -110,7 +110,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             textColor: Colors.white,
                             backgroundColor: Colors.blue,
                             onPressed: () {
-                              context.read<AuthCubit>().signInWithGoogle();
+                              context
+                                  .read<AuthCubit>()
+                                  .signInWithGoogleAccount();
                             },
                           ),
                         ),

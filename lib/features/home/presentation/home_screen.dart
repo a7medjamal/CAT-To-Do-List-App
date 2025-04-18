@@ -22,11 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // Ensure tasks are loaded when the screen initializes
-    // If loadTasks() is called in main.dart's BlocProvider create, this might be redundant
-    // but ensures loading if the user navigates back to home.
-    // Consider if you want to reload every time or rely on the stream.
-    // context.read<TaskCubit>().loadTasks();
   }
 
   @override

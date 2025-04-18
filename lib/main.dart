@@ -1,7 +1,9 @@
 import 'package:cat_to_do_list/core/app_router.dart';
-import 'package:cat_to_do_list/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:cat_to_do_list/features/auth/data/repositories/auth_repository_impl.dart'; // Ensure this file exists and contains the AuthRepositoryImpl class definition.
 import 'package:cat_to_do_list/features/auth/domain/repositories/usecases/login_user.dart';
 import 'package:cat_to_do_list/features/auth/domain/repositories/usecases/signup_user.dart';
+import 'package:cat_to_do_list/features/auth/domain/repositories/usecases/user_google_register.dart';
+import 'package:cat_to_do_list/features/auth/domain/repositories/usecases/user_logout.dart';
 import 'package:cat_to_do_list/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:cat_to_do_list/features/tasks/data/repositories/task_repository_impl.dart';
 import 'package:cat_to_do_list/features/tasks/domain/use_cases/add_task.dart';
@@ -21,9 +23,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  final authRepository = FirebaseAuthRepository();
+  final authRepository = AuthRepositoryImpl();
   final loginUser = LoginUser(authRepository);
+  final logoutUser = LogoutUser(authRepository);
   final signUpUser = SignUpUser(authRepository);
+  final signInWithGoogle = SignInWithGoogle(authRepository);
   final firestore = FirebaseFirestore.instance;
   final taskRepository = TaskRepositoryImpl(firestore: firestore);
   final addTask = AddTask(taskRepository);
@@ -41,6 +45,8 @@ void main() async {
       deleteTask: deleteTask,
       getTaskById: getTaskById,
       getTasks: getTasks,
+      logoutUser: logoutUser,
+      signInWithGoogle: signInWithGoogle,
     ),
   );
 }
@@ -48,6 +54,8 @@ void main() async {
 class ToDoApp extends StatelessWidget {
   final LoginUser loginUser;
   final SignUpUser signUpUser;
+  final LogoutUser logoutUser;
+  final SignInWithGoogle signInWithGoogle;
   final AddTask addTask;
   final UpdateTask updateTask;
   final DeleteTask deleteTask;
@@ -63,6 +71,8 @@ class ToDoApp extends StatelessWidget {
     required this.deleteTask,
     required this.getTaskById,
     required this.getTasks,
+    required this.logoutUser,
+    required this.signInWithGoogle,
   });
 
   @override
@@ -72,7 +82,12 @@ class ToDoApp extends StatelessWidget {
         // AuthCubit
         BlocProvider(
           create:
-              (_) => AuthCubit(loginUser: loginUser, signUpUser: signUpUser),
+              (_) => AuthCubit(
+                loginUser: loginUser,
+                signUpUser: signUpUser,
+                logoutUser: logoutUser,
+                signInWithGoogle: signInWithGoogle,
+              ),
         ),
         BlocProvider(
           create:
